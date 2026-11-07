@@ -1,242 +1,108 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>pers3fone | Vinyl Experience</title>
-<style>
-:root {
-  color-scheme: dark;
-  font-family: Georgia, serif;
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  min-height: 100vh;
-  color: #eee7df;
-  background: radial-gradient(ellipse at 50% 25%, #342c30, #100e11 75%);
-  transition: background 1.5s;
-}
-body.side-b {
-  background: radial-gradient(ellipse at 50% 25%, #34234e, #100d20 75%);
-}
-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 25px 7%;
-  border-bottom: 1px solid #ffffff20;
-}
-.logo { font-size: 23px; letter-spacing: 3px; }
-.small { font: 11px Arial; letter-spacing: 2px; color: #b4a9a8; }
-main {
-  max-width: 1000px;
-  margin: auto;
-  padding: 45px 20px;
-  text-align: center;
-}
-h1 { font-weight: normal; letter-spacing: 5px; }
-.subtitle { color: #aaa0a2; }
-.turntable {
-  position: relative;
-  width: min(85vw, 420px);
-  aspect-ratio: 1;
-  margin: 35px auto;
-  padding: 8%;
-  border: 8px solid #382d2b;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #493d3a, #211c1f);
-  box-shadow: 0 25px 70px #000a, inset 0 0 25px #0008;
-}
-.record {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  position: relative;
-  background: repeating-radial-gradient(circle,
-    #101013 0px, #101013 3px,
-    #242327 4px, #111114 6px);
-  box-shadow: 0 5px 18px #000b;
-}
-.record.spinning { animation: spin 2s linear infinite; }
-.label {
-  position: absolute;
-  inset: 35%;
-  border-radius: 50%;
-  background: #6c4545;
-  display: grid;
-  place-items: center;
-  font: bold 13px Arial;
-  letter-spacing: 2px;
-}
-body.side-b .label { background: #55417b; }
-.label::after {
-  content: "";
-  width: 7px;
-  height: 7px;
-  background: #d9d0c5;
-  border-radius: 50%;
-  position: absolute;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.arm {
-  position: absolute;
-  width: 9px;
-  height: 43%;
-  right: 13%;
-  top: 7%;
-  background: linear-gradient(90deg,#999,#ddd,#666);
-  border-radius: 10px;
-  transform-origin: top center;
-  transform: rotate(-24deg);
-  transition: transform 0.7s;
-  box-shadow: 2px 2px 5px #000;
-}
-.arm.playing { transform: rotate(7deg); }
-.controls { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-button {
-  background: transparent;
-  border: 1px solid #a28e86;
-  color: #eee7df;
-  padding: 13px 20px;
-  cursor: pointer;
-  letter-spacing: 1px;
-}
-button:hover { background: #ffffff19; }
-.tracklist {
-  margin: 35px auto;
-  max-width: 550px;
-  text-align: left;
-}
-.track {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  padding: 16px;
-  border-bottom: 1px solid #ffffff20;
-  font: 14px Arial;
-}
-.locked { opacity: 0.4; }
-footer {
-  padding: 35px 15px;
-  text-align: center;
-  color: #a99fa1;
-  font: 12px Arial;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08090b">
+  <title>Pers3fone — Álbum interactivo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-<header>
-  <div class="logo">pers3fone</div>
-  <div class="small">VINYL EXPERIENCE</div>
-</header>
+<body class="mood-home">
+  <div class="room" aria-hidden="true"></div>
+  <div class="rain" aria-hidden="true"></div>
+  <div class="wall-decay" aria-hidden="true"></div>
+  <div class="petal-fall" aria-hidden="true">
+    <i></i><i></i><i></i><i></i><i></i>
+  </div>
+  <div class="vignette" aria-hidden="true"></div>
 
-<main>
-  <p class="small">UNA EXPERIENCIA MUSICAL INTERACTIVA</p>
-  <h1>EL ÁLBUM</h1>
-  <p class="subtitle">Dos caras. Un mismo viaje.</p>
-
-  <div class="turntable">
-    <div class="record" id="record">
-      <div class="label" id="label">A</div>
+  <header class="topbar">
+    <button class="icon-button menu-button" id="menuButton" aria-label="Abrir listado del álbum">☰</button>
+    <a class="brand" href="#" aria-label="Volver al inicio">pers3fone</a>
+    <div class="top-actions">
+      <button class="icon-button" id="soundButton" aria-label="Activar sonido">♩</button>
+      <button class="icon-button" id="fullscreenButton" aria-label="Pantalla completa">⛶</button>
     </div>
-    <div class="arm" id="arm"></div>
-  </div>
+  </header>
 
-  <div class="controls">
-    <button id="play">▶ Activar tocadiscos</button>
-    <button id="flip">↻ Girar vinilo</button>
-  </div>
+  <button class="more-hotspot" id="moreMusicButton" aria-label="Abrir Más música">Más música</button>
 
-  <p class="subtitle" id="status" aria-live="polite">
-    El vinilo está esperando.
-  </p>
+  <main>
+    <section class="intro-panel" id="introPanel">
+      <p class="eyebrow">Una experiencia en dos caras</p>
+      <h1>Antes de la primera canción,<br>hay que cruzar el umbral.</h1>
+      <button class="outline-button" id="introButton">Escuchar introducción <span>→</span></button>
+      <button class="text-button" id="skipIntroButton">Entrar sin escuchar</button>
+    </section>
 
-  <section class="tracklist">
-    <h2 id="sideTitle">CARA A — OSCURIDAD</h2>
-    <div id="tracks"></div>
+    <section class="deck-ui is-hidden" id="deckUi" aria-live="polite">
+      <div class="vinyl-stage" aria-hidden="true">
+        <div class="vinyl" id="vinyl"><div class="vinyl-label"><span>P3</span></div></div>
+      </div>
+      <div class="now-playing" id="nowPlaying">
+        <button class="cover-button is-hidden" id="coverButton" aria-label="Ampliar portada"><img id="trackCover" alt=""></button>
+        <p class="eyebrow" id="sideLabel">El álbum</p>
+        <h2 id="trackTitle">El tocadiscos está vacío</h2>
+        <p id="trackMeta">Coloca el vinilo para comenzar la cara A</p>
+        <button class="visualizer-link is-hidden" id="visualizerButton">Ver visualizer ↗</button>
+      </div>
+      <button class="place-button" id="placeButton"><span id="placeText">Colocar el vinilo</span><span>▶</span></button>
+      <div class="player-controls is-hidden" id="playerControls">
+        <button class="control-button" id="prevButton" aria-label="Anterior">←</button>
+        <button class="play-button" id="playButton" aria-label="Pausar o reproducir">▶</button>
+        <button class="control-button" id="nextButton" aria-label="Siguiente">→</button>
+      </div>
+    </section>
+  </main>
+
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-header"><p>El disco</p><button class="icon-button" id="closeDrawer" aria-label="Cerrar">×</button></div>
+    <button class="chapter-card intro-chapter" data-special="intro"><span>Umbral</span><strong>Introducción</strong></button>
+    <div class="side-block">
+      <p class="side-heading">Cara A</p>
+      <ol id="sideAList"></ol>
+    </div>
+    <button class="chapter-card bridge-chapter" data-special="skit"><span>Interludio</span><strong>Dar la vuelta al vinilo</strong></button>
+    <div class="side-block locked-side" id="sideBBlock">
+      <p class="side-heading">Cara B</p>
+      <ol id="sideBList"></ol>
+    </div>
+  </aside>
+  <button class="drawer-backdrop" id="drawerBackdrop" aria-label="Cerrar menú"></button>
+
+  <section class="music-library" id="musicLibrary" aria-hidden="true">
+    <div class="library-head">
+      <div><p class="eyebrow">Fuera del álbum</p><h2>Más música</h2></div>
+      <button class="icon-button" id="closeLibrary" aria-label="Cerrar Más música">×</button>
+    </div>
+    <nav class="library-tabs" aria-label="Categorías musicales">
+      <button class="library-tab is-active" data-library-tab="singles">Singles</button>
+      <button class="library-tab" data-library-tab="ep">EP</button>
+      <button class="library-tab" data-library-tab="lp">LP</button>
+    </nav>
+    <div class="library-content" id="libraryContent"></div>
+    <p class="library-note">Aquí aparecerán únicamente proyectos que no formen parte del álbum interactivo.</p>
   </section>
-</main>
+  <button class="library-backdrop" id="libraryBackdrop" aria-label="Cerrar Más música"></button>
 
-<footer>
-  <p>Una experiencia de pers3fone</p>
-  <p>Escucha con auriculares para una experiencia completa.</p>
-  <p>Apoyo voluntario disponible próximamente.</p>
-</footer>
+  <section class="visualizer-modal" id="visualizerModal" aria-hidden="true">
+    <button class="icon-button visualizer-close" id="closeVisualizer" aria-label="Cerrar visualizer">×</button>
+    <div class="video-frame"><iframe id="visualizerFrame" title="Visualizer oficial" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>
+  </section>
+  <button class="visualizer-backdrop" id="visualizerBackdrop" aria-label="Cerrar visualizer"></button>
 
-<script>
-const sides = {
-  A: [
-    ["Anomia", true],
-    ["Calma", true],
-    ["Premonición", true],
-    ["Pista por revelar", false],
-    ["Pista por revelar", false],
-    ["Pista por revelar", false],
-    ["Pista por revelar", false]
-  ],
-  B: [
-    ["Sueños de Neón", true],
-    ["No va a volver", false],
-    ["Pista por revelar", false],
-    ["Pista por revelar", false],
-    ["Pista por revelar", false]
-  ]
-};
+  <section class="cover-modal" id="coverModal" aria-hidden="true">
+    <button class="icon-button cover-close" id="closeCover" aria-label="Cerrar portada">×</button>
+    <img id="coverModalImage" alt="Portada ampliada">
+  </section>
+  <button class="cover-backdrop" id="coverBackdrop" aria-label="Cerrar portada"></button>
 
-let side = "A";
-let playing = false;
-
-const record = document.getElementById("record");
-const arm = document.getElementById("arm");
-const play = document.getElementById("play");
-const flip = document.getElementById("flip");
-const status = document.getElementById("status");
-const tracks = document.getElementById("tracks");
-
-function render() {
-  document.body.classList.toggle("side-b", side === "B");
-  document.getElementById("label").textContent = side;
-  document.getElementById("sideTitle").textContent =
-    side === "A" ? "CARA A — OSCURIDAD" : "CARA B — LUZ";
-
-  tracks.replaceChildren();
-  sides[side].forEach(([name, available], index) => {
-    const row = document.createElement("div");
-    row.className = "track" + (available ? "" : " locked");
-
-    const title = document.createElement("span");
-    title.textContent = String(index + 1).padStart(2, "0") + " · " + name;
-
-    const state = document.createElement("span");
-    state.textContent = available ? "Disponible" : "Próximamente";
-
-    row.append(title, state);
-    tracks.append(row);
-  });
-}
-
-play.addEventListener("click", () => {
-  playing = !playing;
-  record.classList.toggle("spinning", playing);
-  arm.classList.toggle("playing", playing);
-  play.textContent = playing ? "Ⅱ Detener tocadiscos" : "▶ Activar tocadiscos";
-  status.textContent = playing
-    ? "El vinilo está girando. Selecciona una canción cuando integremos el audio."
-    : "El vinilo está esperando.";
-});
-
-flip.addEventListener("click", () => {
-  side = side === "A" ? "B" : "A";
-  playing = false;
-  record.classList.remove("spinning");
-  arm.classList.remove("playing");
-  play.textContent = "▶ Activar tocadiscos";
-  status.textContent = "Has cambiado a la Cara " + side + ".";
-  render();
-});
-
-render();
-</script>
+  <div class="sound-consent" id="soundConsent">Activa el sonido para escuchar la lluvia y la experiencia completa.</div>
+  <audio id="mainAudio" preload="metadata"></audio>
+  <audio id="ambientAudio" preload="metadata"></audio>
+  <script src="app.js"></script>
 </body>
 </html>
