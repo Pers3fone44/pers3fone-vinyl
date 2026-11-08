@@ -216,3 +216,28 @@ async function ensureSound(){
  if(rainGain){rainGain.gain.cancelScheduledValues(ctx.currentTime);rainGain.gain.setTargetAtTime(ambientAllowed?.014:0,ctx.currentTime,.12)}
  if(ambientAllowed&&!ambientTimer)queueAmbientSnippet(1600);else if(!ambientAllowed)hardStopAmbient();
 }
+
+// Textura final: cinta lo-fi cálida, crujido analógico y gotas de lluvia aisladas, sin bajar el nivel.
+function startRain(){
+ const seconds=6,length=ctx.sampleRate*seconds,buffer=ctx.createBuffer(1,length,ctx.sampleRate),data=buffer.getChannelData(0);let brown=0,drop=0;
+ for(let i=0;i<length;i++){
+  brown=(brown+(Math.random()*2-1)*.02)/1.02;
+  if(Math.random()<.000055)drop=.32+Math.random()*.25;
+  drop*=.9945;
+  const hiss=(Math.random()*2-1)*.018;
+  const wow=Math.sin(i/ctx.sampleRate*2*Math.PI*.19)*.018;
+  data[i]=(brown*.48+hiss+wow+drop)*.28;
+ }
+ rainSource=ctx.createBufferSource();rainSource.buffer=buffer;rainSource.loop=true;
+ const low=ctx.createBiquadFilter();low.type='lowpass';low.frequency.value=1800;
+ const high=ctx.createBiquadFilter();high.type='highpass';high.frequency.value=65;
+ rainGain=ctx.createGain();rainGain.gain.value=.026;rainSource.connect(low).connect(high).connect(rainGain).connect(ctx.destination);rainSource.start();
+}
+async function ensureSound(){
+ soundOn=true;$('#soundConsent').classList.add('is-hidden');$('#soundButton').textContent='♫';
+ if(!ctx){ctx=new (window.AudioContext||window.webkitAudioContext)();startRain()}
+ if(ctx.state==='suspended')await ctx.resume();
+ const ambientAllowed=!placed&&audio.paused;
+ if(rainGain)rainGain.gain.setTargetAtTime(ambientAllowed?.026:0,ctx.currentTime,.12);
+ if(ambientAllowed&&!ambientTimer)queueAmbientSnippet(1600);else if(!ambientAllowed)hardStopAmbient();
+}
