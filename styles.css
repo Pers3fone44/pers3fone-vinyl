@@ -151,3 +151,7 @@
   .vinyl.is-placed{transform:translateY(0) rotateX(68deg) rotateZ(0) scale(1)}
 }
 @keyframes window-rain{from{background-position:0 -110%,0 -75%}to{background-position:-7px 115%,5px 95%}}
+
+/* En ordenador también: el vinilo entra verticalmente desde arriba */
+.vinyl{transform:translateY(-115vh) rotateX(68deg) rotateZ(-18deg) scale(.58)}
+.vinyl.is-placed{transform:translateY(0) rotateX(68deg) rotateZ(0) scale(1)}
