@@ -363,3 +363,7 @@ body .deck-ui .place-button{left:50%;right:auto;bottom:6.5vh;width:min(460px,48v
 /* v27 · portada alineada con los controles inferiores */
 body .deck-ui .cover-button{top:calc(100vh - 270px);bottom:auto}
 @media(max-width:900px){body .deck-ui .cover-button{top:calc(100vh - 245px);bottom:auto}}
+
+/* v28 · portada fuera del bloque superior */
+body .deck-ui > .cover-button{top:auto;bottom:6.5vh}
+@media(max-width:900px){body .deck-ui > .cover-button{top:auto;bottom:4.5vh}}
