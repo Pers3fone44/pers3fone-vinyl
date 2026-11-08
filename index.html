@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=18">
+  <link rel="stylesheet" href="styles.css?v=19">
 </head>
 <body class="mood-home">
   <video class="room-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" poster="assets/images/room-menu.png">
@@ -36,9 +36,9 @@
 
   <nav class="desktop-side-nav" aria-label="Navegación principal">
     <button class="side-nav-item is-active" type="button" onclick="document.getElementById('menuButton').click()"><span>El álbum</span></button>
-    <button class="side-nav-item" type="button"><span>Letras</span></button>
-    <button class="side-nav-item" type="button" onclick="document.getElementById('moreMusicButton').click()"><span>Archivo</span></button>
-    <button class="side-nav-item" type="button"><span>Apoyar ♡</span></button>
+    <button class="side-nav-item" type="button" data-open-section="lyrics"><span>Letras</span></button>
+    <button class="side-nav-item" type="button" data-open-section="archive"><span>Archivo</span></button>
+    <button class="side-nav-item" type="button" data-open-section="support"><span>Apoyar ♡</span></button>
   </nav>
 
   <main>
@@ -73,9 +73,9 @@
     <div class="drawer-header"><p>El disco</p><button class="icon-button" id="closeDrawer" aria-label="Cerrar">×</button></div>
     <nav class="drawer-sections" aria-label="Secciones principales">
       <button class="drawer-section is-active" type="button">El álbum</button>
-      <button class="drawer-section" type="button">Letras</button>
-      <button class="drawer-section" type="button" onclick="document.getElementById('moreMusicButton').click()">Archivo</button>
-      <button class="drawer-section support-section" type="button">Apoyar ♡</button>
+      <button class="drawer-section" type="button" data-open-section="lyrics">Letras</button>
+      <button class="drawer-section" type="button" data-open-section="archive">Archivo</button>
+      <button class="drawer-section support-section" type="button" data-open-section="support">Apoyar ♡</button>
     </nav>
     <details class="album-accordion">
       <summary>Intro</summary>
@@ -111,6 +111,55 @@
   </section>
   <button class="library-backdrop" id="libraryBackdrop" aria-label="Cerrar Más música"></button>
 
+  <section class="content-panel" id="contentPanel" aria-hidden="true">
+    <div class="content-panel-head">
+      <div><p class="eyebrow" id="contentEyebrow">Pers3fone</p><h2 id="contentTitle">Archivo</h2></div>
+      <button class="icon-button" id="closeContentPanel" aria-label="Cerrar sección">×</button>
+    </div>
+
+    <div class="content-view" data-content-view="lyrics">
+      <p class="content-intro">Las canciones, ordenadas como se escuchan en el vinilo. Las letras inéditas permanecerán ocultas hasta su publicación.</p>
+      <details class="content-accordion" open><summary>Cara A</summary><div class="content-list">
+        <button type="button">01 · Calma <span>Leer letra</span></button>
+        <button type="button">02 · Premonición <span>Leer letra</span></button>
+        <button type="button" disabled>03 · Próximamente</button>
+        <button type="button">04 · Vacío <span>Leer letra</span></button>
+        <button type="button" disabled>05 · Próximamente</button>
+      </div></details>
+      <details class="content-accordion"><summary>Cara B</summary><div class="content-list">
+        <button type="button">01 · Sueños de Neón <span>Leer letra</span></button>
+        <button type="button" disabled>02 · Próximamente</button>
+        <button type="button" disabled>03 · Próximamente</button>
+        <button type="button" disabled>04 · Próximamente</button>
+        <button type="button" disabled>05 · Próximamente</button>
+      </div></details>
+      <p class="content-note">Añadiremos cada letra completa cuando nos pases el texto definitivo.</p>
+    </div>
+
+    <div class="content-view" data-content-view="archive">
+      <p class="content-intro">El archivo reúne la parte humana del proyecto: momentos reales, proceso y memoria, sin convertirlo en una galería genérica.</p>
+      <div class="archive-grid">
+        <button type="button"><strong>Directos</strong><span>Conciertos, ensayos y actuaciones</span></button>
+        <button type="button"><strong>Cuaderno</strong><span>Notas, ideas y fragmentos del proceso</span></button>
+        <button type="button"><strong>Fotografías</strong><span>Retratos y escenas alrededor de Pers3fone</span></button>
+        <button type="button"><strong>Vivencias</strong><span>Historias personales detrás de las canciones</span></button>
+      </div>
+      <p class="content-note">Las piezas aparecerán aquí a medida que construyamos el archivo.</p>
+    </div>
+
+    <div class="content-view" data-content-view="support">
+      <p class="content-intro">Si este proyecto te acompaña y quieres ayudar a que siga creciendo, puedes hacerlo de manera voluntaria. La música seguirá siendo accesible para todos.</p>
+      <div class="support-card">
+        <p class="eyebrow">Apoyo voluntario</p>
+        <h3>Ayuda a sostener Pers3fone</h3>
+        <p>Grabación, mezcla, visuales y publicación independiente.</p>
+        <button class="support-button" type="button" disabled>Enlace de apoyo próximamente</button>
+      </div>
+      <p class="content-note">Cuando elijas Ko-fi o PayPal.Me, conectaremos aquí el enlace. No mostraremos públicamente tu IBAN ni tu teléfono.</p>
+    </div>
+  </section>
+  <button class="content-backdrop" id="contentBackdrop" aria-label="Cerrar sección"></button>
+
   <section class="visualizer-modal" id="visualizerModal" aria-hidden="true">
     <button class="icon-button visualizer-close" id="closeVisualizer" aria-label="Cerrar visualizer">×</button>
     <div class="video-frame"><iframe id="visualizerFrame" title="Visualizer oficial" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>
@@ -127,6 +176,34 @@
   <audio id="mainAudio" preload="metadata"></audio>
   <audio id="ambientAudio" preload="metadata"></audio>
   <script src="app.js"></script>
+  <script>
+    (() => {
+      const panel = document.getElementById('contentPanel');
+      const backdrop = document.getElementById('contentBackdrop');
+      const titles = {
+        lyrics: ['Canciones y palabras', 'Letras'],
+        archive: ['Memoria del proyecto', 'Archivo'],
+        support: ['Sostener lo independiente', 'Apoyar']
+      };
+      function openSection(section) {
+        document.querySelectorAll('[data-content-view]').forEach(view => view.classList.toggle('is-active', view.dataset.contentView === section));
+        document.getElementById('contentEyebrow').textContent = titles[section][0];
+        document.getElementById('contentTitle').textContent = titles[section][1];
+        panel.classList.add('is-open'); backdrop.classList.add('is-open');
+        panel.setAttribute('aria-hidden', 'false');
+        document.getElementById('drawer')?.classList.remove('is-open');
+        document.getElementById('drawerBackdrop')?.classList.remove('is-open');
+      }
+      function closeSection() {
+        panel.classList.remove('is-open'); backdrop.classList.remove('is-open');
+        panel.setAttribute('aria-hidden', 'true');
+      }
+      document.querySelectorAll('[data-open-section]').forEach(button => button.addEventListener('click', () => openSection(button.dataset.openSection)));
+      document.getElementById('closeContentPanel').addEventListener('click', closeSection);
+      backdrop.addEventListener('click', closeSection);
+      document.addEventListener('keydown', event => { if (event.key === 'Escape') closeSection(); });
+    })();
+  </script>
 </body>
 </html>
 
