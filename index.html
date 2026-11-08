@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=16">
+  <link rel="stylesheet" href="styles.css?v=18">
 </head>
 <body class="mood-home">
   <video class="room-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" poster="assets/images/room-menu.png">
@@ -33,6 +33,14 @@
   </header>
 
   <button class="more-hotspot" id="moreMusicButton" aria-label="Abrir Más música">Más música</button>
+
+  <nav class="desktop-side-nav" aria-label="Navegación principal">
+    <button class="side-nav-item is-active" type="button" onclick="document.getElementById('menuButton').click()"><span>El álbum</span></button>
+    <button class="side-nav-item" type="button"><span>Letras</span></button>
+    <button class="side-nav-item" type="button" onclick="document.getElementById('menuButton').click()"><span>Visualizers</span></button>
+    <button class="side-nav-item" type="button" onclick="document.getElementById('moreMusicButton').click()"><span>Archivo</span></button>
+    <button class="side-nav-item" type="button"><span>Apoyar ♡</span></button>
+  </nav>
 
   <main>
     <section class="intro-panel" id="introPanel">
@@ -64,16 +72,29 @@
 
   <aside class="drawer" id="drawer" aria-hidden="true">
     <div class="drawer-header"><p>El disco</p><button class="icon-button" id="closeDrawer" aria-label="Cerrar">×</button></div>
-    <button class="chapter-card intro-chapter" data-special="intro"><span>Umbral</span><strong>Introducción</strong></button>
-    <div class="side-block">
-      <p class="side-heading">Cara A</p>
-      <ol id="sideAList"></ol>
-    </div>
-    <button class="chapter-card bridge-chapter" data-special="skit"><span>Interludio</span><strong>Dar la vuelta al vinilo</strong></button>
-    <div class="side-block locked-side" id="sideBBlock">
-      <p class="side-heading">Cara B</p>
-      <ol id="sideBList"></ol>
-    </div>
+    <nav class="drawer-sections" aria-label="Secciones principales">
+      <button class="drawer-section is-active" type="button">El álbum</button>
+      <button class="drawer-section" type="button">Letras</button>
+      <button class="drawer-section" type="button">Visualizers</button>
+      <button class="drawer-section" type="button" onclick="document.getElementById('moreMusicButton').click()">Archivo</button>
+      <button class="drawer-section support-section" type="button">Apoyar ♡</button>
+    </nav>
+    <details class="album-accordion">
+      <summary>Intro</summary>
+      <button class="chapter-card intro-chapter" data-special="intro"><span>Inicio del viaje</span><strong>Reproducir intro</strong></button>
+    </details>
+    <details class="album-accordion" open>
+      <summary>Cara A</summary>
+      <div class="side-block"><ol id="sideAList"></ol></div>
+    </details>
+    <details class="album-accordion">
+      <summary>Skit</summary>
+      <button class="chapter-card bridge-chapter" data-special="skit"><span>Cambio de cara</span><strong>Reproducir skit</strong></button>
+    </details>
+    <details class="album-accordion">
+      <summary>Cara B</summary>
+      <div class="side-block locked-side" id="sideBBlock"><ol id="sideBList"></ol></div>
+    </details>
   </aside>
   <button class="drawer-backdrop" id="drawerBackdrop" aria-label="Cerrar menú"></button>
 

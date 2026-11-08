@@ -158,3 +158,44 @@
 
 /* Se elimina la lluvia superpuesta: la imagen conserva únicamente su lluvia integrada */
 .rain{display:none!important}
+
+/* Navegación lateral inspirada en la composición original */
+.desktop-side-nav{
+  position:fixed;z-index:26;right:2.2vw;top:50%;transform:translateY(-50%);
+  width:190px;display:flex;flex-direction:column;align-items:stretch;gap:21px;
+}
+.side-nav-item{
+  position:relative;border:0;background:transparent;color:#cfc1bd;cursor:pointer;
+  padding:8px 16px;font:400 .72rem/1.2 Montserrat,sans-serif;
+  text-transform:uppercase;letter-spacing:.28em;text-align:center;
+  text-shadow:0 2px 14px #000;transition:color .25s,transform .25s;
+}
+.side-nav-item:hover,.side-nav-item:focus-visible{color:#fff;transform:translateX(-4px);outline:none}
+.side-nav-item.is-active{color:#f1e6e1}
+.side-nav-item.is-active::before,.side-nav-item.is-active::after{
+  content:"";position:absolute;top:50%;width:12px;height:12px;border-color:#f1e6e1;opacity:.9;
+}
+.side-nav-item.is-active::before{left:0;border-left:1px solid;border-top:1px solid;transform:translateY(-50%) rotate(-45deg)}
+.side-nav-item.is-active::after{right:0;border-right:1px solid;border-bottom:1px solid;transform:translateY(-50%) rotate(-45deg)}
+@media(max-width:900px),(hover:none) and (pointer:coarse){.desktop-side-nav{display:none}}
+.drawer-sections{display:none}
+@media(max-width:760px),(hover:none) and (pointer:coarse){
+  .drawer-sections{display:grid;grid-template-columns:1fr;margin:15px 0 22px;border-top:1px solid rgba(255,255,255,.12)}
+  .drawer-section{
+    position:relative;border:0;border-bottom:1px solid rgba(255,255,255,.09);background:transparent;
+    color:#c9bbb7;padding:15px 12px;text-align:left;text-transform:uppercase;
+    letter-spacing:.25em;font:400 .65rem Montserrat,sans-serif;cursor:pointer;
+  }
+  .drawer-section::after{content:"→";position:absolute;right:9px;color:#786d6b}
+  .drawer-section.is-active{color:#f2e6e1;border-left:2px solid var(--accent);padding-left:16px}
+  .drawer-section.support-section{color:#efb5ca}
+}
+
+/* Bloques desplegables del álbum */
+.album-accordion{border-bottom:1px solid rgba(255,255,255,.1)}
+.album-accordion>summary{position:relative;list-style:none;cursor:pointer;padding:17px 28px 17px 4px;color:var(--ink);font:400 1.08rem 'Cormorant Garamond',serif;text-transform:uppercase;letter-spacing:.22em;user-select:none}
+.album-accordion>summary::-webkit-details-marker{display:none}
+.album-accordion>summary::after{content:"+";position:absolute;right:5px;top:50%;transform:translateY(-50%);color:var(--accent);font:300 1.25rem Montserrat,sans-serif}
+.album-accordion[open]>summary::after{content:"−"}
+.album-accordion .side-block{margin:0 0 12px}
+.album-accordion .chapter-card{margin:0 0 14px}
