@@ -71,3 +71,17 @@
 @keyframes decay-cycle{0%,15%{opacity:0;transform:scale(1)}18%{opacity:.16}24%{opacity:.25;transform:scale(1.015)}31%{opacity:.09}42%,59%{opacity:0}63%{opacity:.12;transform:translateX(3px) scale(1.025)}70%{opacity:.22}78%{opacity:.06}83%,100%{opacity:0;transform:scale(1)}}
 @media(max-width:760px),(hover:none) and (pointer:coarse){.wall-decay{left:0;width:55%;height:58%}.petal-fall{width:35%}.petal-fall i{left:8vw}}
 @media(prefers-reduced-motion:reduce){.wall-decay,.petal-fall i{display:none}}
+
+
+/* Fondo vertical dedicado para pantallas móviles */
+@media(max-width:760px),(hover:none) and (pointer:coarse){
+  .room{background-image:url('assets/images/room-mobile.png');background-position:center;background-size:cover;background-repeat:no-repeat}
+  .rain{opacity:.66;background-size:105% 175%;animation-duration:.88s;mask-image:linear-gradient(90deg,transparent 0 54%,rgba(0,0,0,.3) 60%,#000 69%,#000 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0 54%,rgba(0,0,0,.3) 60%,#000 69%,#000 100%)}
+  .wall-decay{left:0;width:48%;height:62%}
+  .petal-fall{width:32%;height:82%}
+  .petal-fall i{left:7vw;top:39vh;width:12px;height:17px;filter:drop-shadow(0 0 3px rgba(210,44,82,.65))}
+  .petal-fall i:nth-child(2){left:10vw;top:42vh}
+  .petal-fall i:nth-child(3){left:4.5vw;top:45vh}
+  .petal-fall i:nth-child(4){left:12vw;top:38vh}
+  .petal-fall i:nth-child(5){left:8vw;top:47vh}
+}
