@@ -241,3 +241,14 @@ async function ensureSound(){
  if(rainGain)rainGain.gain.setTargetAtTime(ambientAllowed?.026:0,ctx.currentTime,.12);
  if(ambientAllowed&&!ambientTimer)queueAmbientSnippet(1600);else if(!ambientAllowed)hardStopAmbient();
 }
+
+// Nivel final y recomendación común para móvil y escritorio.
+$('#soundConsent').textContent='🎧 Recomendamos usar auriculares para disfrutar la experiencia completa.';
+async function ensureSound(){
+ soundOn=true;$('#soundConsent').classList.add('is-hidden');$('#soundButton').textContent='♫';
+ if(!ctx){ctx=new (window.AudioContext||window.webkitAudioContext)();startRain()}
+ if(ctx.state==='suspended')await ctx.resume();
+ const ambientAllowed=!placed&&audio.paused;
+ if(rainGain)rainGain.gain.setTargetAtTime(ambientAllowed?.032:0,ctx.currentTime,.12);
+ if(ambientAllowed&&!ambientTimer)queueAmbientSnippet(1600);else if(!ambientAllowed)hardStopAmbient();
+}
