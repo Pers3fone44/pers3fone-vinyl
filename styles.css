@@ -78,6 +78,7 @@
   .vinyl-stage{top:61%;width:min(61vw,330px)}
   .player-controls{bottom:7vh}
 }
+
 .room{background-image:url('assets/images/room-menu.png')}
 .more-hotspot{position:fixed;z-index:24;right:2.7vw;top:45.1%;width:170px;height:44px;border:0;background:transparent;color:transparent;cursor:pointer}
 .music-library{position:fixed;z-index:55;inset:6vh 5vw;background:rgba(5,6,9,.94);border:1px solid rgba(255,255,255,.14);box-shadow:0 35px 100px #000;backdrop-filter:blur(24px);padding:clamp(24px,4vw,58px);overflow:auto;opacity:0;transform:translateY(25px) scale(.985);pointer-events:none;transition:.4s ease}
@@ -330,4 +331,31 @@
   .player-controls{left:50%;bottom:4.5vh;transform:translateX(-28%);gap:9px}
   .place-button{left:6vw;right:6vw;bottom:4.5vh;width:auto;transform:none}
   .visualizer-link{margin:7px auto 0}
+}
+
+/* Prioridad final: información arriba, portada y controles abajo, vinilo suspendido */
+body .deck-ui .vinyl-stage{
+  left:50%;top:35%;width:min(25vw,400px);
+  filter:drop-shadow(0 24px 25px rgba(0,0,0,.72))
+}
+body .deck-ui .now-playing{
+  left:50%;right:auto;top:15vh;bottom:auto;width:min(620px,46vw);
+  padding:0 22px;text-align:center;transform:translateX(-50%);
+  background:linear-gradient(90deg,transparent,rgba(4,4,6,.56) 20%,rgba(4,4,6,.56) 80%,transparent);
+  border-left:0;backdrop-filter:blur(3px)
+}
+body .deck-ui .cover-button{
+  position:fixed;left:calc(50% - 142px);top:auto;bottom:6.5vh;
+  width:66px;height:66px;margin:0;z-index:2;
+  box-shadow:0 10px 30px rgba(0,0,0,.65)
+}
+body .deck-ui .player-controls{left:50%;bottom:6.5vh;transform:translateX(-25%);gap:16px}
+body .deck-ui .place-button{left:50%;right:auto;bottom:6.5vh;width:min(460px,48vw);transform:translateX(-50%)}
+
+@media(max-width:900px){
+  body .deck-ui .vinyl-stage{left:50%;top:40%;width:min(43vw,230px)}
+  body .deck-ui .now-playing{left:8vw;right:8vw;top:12.5vh;width:auto;padding:8px 12px;transform:none}
+  body .deck-ui .cover-button{left:calc(50% - 126px);bottom:4.5vh;width:54px;height:54px}
+  body .deck-ui .player-controls{left:50%;bottom:4.5vh;transform:translateX(-28%);gap:9px}
+  body .deck-ui .place-button{left:6vw;right:6vw;bottom:4.5vh;width:auto;transform:none}
 }
