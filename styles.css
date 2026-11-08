@@ -359,3 +359,7 @@ body .deck-ui .place-button{left:50%;right:auto;bottom:6.5vh;width:min(460px,48v
   body .deck-ui .player-controls{left:50%;bottom:4.5vh;transform:translateX(-28%);gap:9px}
   body .deck-ui .place-button{left:6vw;right:6vw;bottom:4.5vh;width:auto;transform:none}
 }
+
+/* v27 · portada alineada con los controles inferiores */
+body .deck-ui .cover-button{top:calc(100vh - 270px);bottom:auto}
+@media(max-width:900px){body .deck-ui .cover-button{top:calc(100vh - 245px);bottom:auto}}
