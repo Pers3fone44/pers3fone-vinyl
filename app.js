@@ -163,3 +163,24 @@ $('#coverButton').onclick=openCover;$('#closeCover').onclick=closeCover;$('#cove
 const playerCover = document.getElementById('coverButton');
 const playerControlsBar = document.getElementById('playerControls');
 if (playerCover && playerControlsBar) playerControlsBar.before(playerCover);
+
+// Ambiente inicial lo-fi y previews de canciones disponibles.
+ambientSnippets.splice(0,ambientSnippets.length,'assets/audio/calma.mp3','assets/audio/premonicion.mp3','assets/audio/vacio.mp3','assets/audio/suenos-de-neon.mp3');
+function queueAmbientSnippet(delay=11000){
+ clearTimeout(ambientTimer);ambientTimer=setTimeout(()=>{
+  if(!soundOn||placed||!audio.paused)return queueAmbientSnippet();
+  ambientAudio.src=ambientSnippets[Math.floor(Math.random()*ambientSnippets.length)];ambientAudio.volume=0;
+  const excerptLength=7000+Math.random()*4000;
+  ambientAudio.onloadedmetadata=()=>{if(Number.isFinite(ambientAudio.duration)&&ambientAudio.duration>18)ambientAudio.currentTime=Math.random()*(ambientAudio.duration-15);ambientAudio.play().then(()=>fadeMedia(ambientAudio,.065,1800)).catch(()=>{})};
+  setTimeout(()=>fadeMedia(ambientAudio,0,1600),Math.max(3000,excerptLength-1700));
+  setTimeout(()=>{ambientAudio.pause();queueAmbientSnippet(11000+Math.random()*13000)},excerptLength);
+ },delay)
+}
+function startRain(){
+ const seconds=3,length=ctx.sampleRate*seconds,buffer=ctx.createBuffer(1,length,ctx.sampleRate),data=buffer.getChannelData(0);let last=0;
+ for(let i=0;i<length;i++){const white=Math.random()*2-1;last=(last+.012*white)/1.012;data[i]=last*2.7}
+ rainSource=ctx.createBufferSource();rainSource.buffer=buffer;rainSource.loop=true;
+ const filter=ctx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=920;
+ rainGain=ctx.createGain();rainGain.gain.value=.026;rainSource.connect(filter).connect(rainGain).connect(ctx.destination);rainSource.start();
+}
+audio.addEventListener('play',()=>{clearTimeout(ambientTimer);fadeMedia(ambientAudio,0,300);setTimeout(()=>ambientAudio.pause(),340);if(rainGain&&ctx)rainGain.gain.setTargetAtTime(0,ctx.currentTime,.22)});
