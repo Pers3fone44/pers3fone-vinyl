@@ -184,3 +184,5 @@ function startRain(){
  rainGain=ctx.createGain();rainGain.gain.value=.026;rainSource.connect(filter).connect(rainGain).connect(ctx.destination);rainSource.start();
 }
 audio.addEventListener('play',()=>{clearTimeout(ambientTimer);fadeMedia(ambientAudio,0,300);setTimeout(()=>ambientAudio.pause(),340);if(rainGain&&ctx)rainGain.gain.setTargetAtTime(0,ctx.currentTime,.22)});
+
+async function ensureSound(){soundOn=true;$('#soundConsent').classList.add('is-hidden');$('#soundButton').textContent='♫';if(!ctx){ctx=new (window.AudioContext||window.webkitAudioContext)();startRain()}if(ctx.state==='suspended')await ctx.resume();if(rainGain)rainGain.gain.setTargetAtTime(.026,ctx.currentTime,.35);if(!ambientTimer&&!placed)queueAmbientSnippet(1200)}
