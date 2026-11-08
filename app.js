@@ -186,3 +186,23 @@ function startRain(){
 audio.addEventListener('play',()=>{clearTimeout(ambientTimer);fadeMedia(ambientAudio,0,300);setTimeout(()=>ambientAudio.pause(),340);if(rainGain&&ctx)rainGain.gain.setTargetAtTime(0,ctx.currentTime,.22)});
 
 async function ensureSound(){soundOn=true;$('#soundConsent').classList.add('is-hidden');$('#soundButton').textContent='♫';if(!ctx){ctx=new (window.AudioContext||window.webkitAudioContext)();startRain()}if(ctx.state==='suspended')await ctx.resume();if(rainGain)rainGain.gain.setTargetAtTime(.026,ctx.currentTime,.35);if(!ambientTimer&&!placed)queueAmbientSnippet(1200)}
+
+// Corte absoluto del ambiente al arrancar cualquier contenido del álbum.
+function hardStopAmbient(){
+ clearTimeout(ambientTimer);ambientTimer=null;ambientAudio.onloadedmetadata=null;
+ ambientAudio.pause();ambientAudio.currentTime=0;ambientAudio.volume=0;
+ if(rainGain&&ctx){rainGain.gain.cancelScheduledValues(ctx.currentTime);rainGain.gain.setValueAtTime(0,ctx.currentTime)}
+}
+function startRain(){
+ const seconds=4,length=ctx.sampleRate*seconds,buffer=ctx.createBuffer(1,length,ctx.sampleRate),data=buffer.getChannelData(0);let brown=0;
+ for(let i=0;i<length;i++){brown=(brown+(Math.random()*2-1)*.018)/1.018;const wow=Math.sin(i/ctx.sampleRate*2*Math.PI*.23)*.035;data[i]=(brown*.72+wow)*.32}
+ rainSource=ctx.createBufferSource();rainSource.buffer=buffer;rainSource.loop=true;
+ const low=ctx.createBiquadFilter();low.type='lowpass';low.frequency.value=720;
+ const high=ctx.createBiquadFilter();high.type='highpass';high.frequency.value=75;
+ rainGain=ctx.createGain();rainGain.gain.value=.014;rainSource.connect(low).connect(high).connect(rainGain).connect(ctx.destination);rainSource.start();
+}
+async function ensureSound(){soundOn=true;$('#soundConsent').classList.add('is-hidden');$('#soundButton').textContent='♫';if(!ctx){ctx=new (window.AudioContext||window.webkitAudioContext)();startRain()}if(ctx.state==='suspended')await ctx.resume();if(rainGain)rainGain.gain.setTargetAtTime(.014,ctx.currentTime,.25);if(!ambientTimer&&!placed&&audio.paused)queueAmbientSnippet(1600)}
+audio.addEventListener('play',hardStopAmbient);
+$('#placeButton').addEventListener('click',hardStopAmbient,{capture:true});
+$('#introButton').addEventListener('click',hardStopAmbient,{capture:true});
+document.querySelectorAll('[data-special],[data-side]').forEach(b=>b.addEventListener('click',hardStopAmbient,{capture:true}));
