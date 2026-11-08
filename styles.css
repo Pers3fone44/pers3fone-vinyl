@@ -155,3 +155,6 @@
 /* En ordenador también: el vinilo entra verticalmente desde arriba */
 .vinyl{transform:translateY(-115vh) rotateX(68deg) rotateZ(-18deg) scale(.58)}
 .vinyl.is-placed{transform:translateY(0) rotateX(68deg) rotateZ(0) scale(1)}
+
+/* Se elimina la lluvia superpuesta: la imagen conserva únicamente su lluvia integrada */
+.rain{display:none!important}
