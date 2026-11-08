@@ -158,3 +158,8 @@ function closeCover(){
   $('#coverModal').classList.remove('is-open');$('#coverBackdrop').classList.remove('is-open');$('#coverModal').setAttribute('aria-hidden','true');
 }
 $('#coverButton').onclick=openCover;$('#closeCover').onclick=closeCover;$('#coverBackdrop').onclick=closeCover;
+
+// Mantiene la portada junto a los controles inferiores.
+const playerCover = document.getElementById('coverButton');
+const playerControlsBar = document.getElementById('playerControls');
+if (playerCover && playerControlsBar) playerControlsBar.before(playerCover);
