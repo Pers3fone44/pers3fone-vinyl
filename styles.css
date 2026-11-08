@@ -273,6 +273,7 @@
 
 /* Ajuste final v21: prioridad sobre las reglas responsive anteriores */
 @media(min-width:901px){
+  .vinyl-stage{width:min(34vw,560px);top:51%}
   .now-playing{
     left:3vw;top:25vh;bottom:auto;width:min(320px,24vw);padding:18px;
     background:linear-gradient(105deg,rgba(4,4,6,.82),rgba(4,4,6,.34) 78%,transparent);
@@ -291,7 +292,7 @@
   .now-playing h2{font-size:clamp(1.15rem,5.3vw,1.75rem);margin:4px 0}
   .now-playing .eyebrow{margin:2px 0}
   .now-playing>p:last-child{font-size:.58rem;line-height:1.35}
-  .vinyl-stage{left:51.5%;top:61%;width:min(61vw,330px)}
-  .tonearm{right:-3%;top:13%;width:48%;height:48%}
+  .vinyl-stage{left:51.5%;top:61%;width:min(51vw,285px)}
+  .tonearm{right:-5%;top:12%;width:50%;height:50%}
   .player-controls{left:3vw;bottom:4.5vh;transform:none;gap:10px}
 }
