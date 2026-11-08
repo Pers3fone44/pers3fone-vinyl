@@ -284,3 +284,50 @@
   .player-controls{left:3vw;bottom:4.5vh;transform:none;gap:10px}
 }
 .vinyl.is-spinning{animation-duration:5.6s}
+
+/* v24 · composición editorial: información arriba, reproductor abajo y vinilo suspendido */
+@media(min-width:901px){
+  .vinyl-stage{
+    left:50%;top:35%;width:min(25vw,400px);
+    filter:drop-shadow(0 24px 25px rgba(0,0,0,.72));
+  }
+  .vinyl.is-placed{transform:rotateX(60deg) rotateZ(0) scale(1)}
+  .now-playing{
+    left:50%;top:15vh;bottom:auto;width:min(620px,46vw);
+    padding:0 22px;text-align:center;transform:translateX(-50%);
+    background:linear-gradient(90deg,transparent,rgba(4,4,6,.56) 20%,rgba(4,4,6,.56) 80%,transparent);
+    border-left:0;backdrop-filter:blur(3px)
+  }
+  .now-playing h2{font-size:clamp(2rem,3.2vw,3.8rem);margin:5px 0}
+  .now-playing>p:last-of-type{margin:5px auto 0;max-width:460px}
+  .cover-button{
+    position:fixed;left:calc(50% - 142px);top:auto;bottom:6.5vh;
+    width:66px;height:66px;margin:0;z-index:2;
+    box-shadow:0 10px 30px rgba(0,0,0,.65)
+  }
+  .player-controls{left:50%;bottom:6.5vh;transform:translateX(-25%);gap:16px}
+  .place-button{left:50%;bottom:6.5vh;width:min(460px,48vw)}
+  .visualizer-link{margin:10px auto 0}
+}
+
+@media(max-width:900px){
+  .vinyl-stage{
+    left:50%;top:40%;width:min(43vw,230px);
+    filter:drop-shadow(0 18px 18px rgba(0,0,0,.72));
+  }
+  .vinyl.is-placed{transform:rotateX(60deg) rotateZ(0) scale(1)}
+  .now-playing{
+    left:8vw;right:8vw;top:12.5vh;bottom:auto;width:auto;
+    padding:8px 12px;text-align:center;
+    background:linear-gradient(90deg,transparent,rgba(4,4,6,.6) 18%,rgba(4,4,6,.6) 82%,transparent)
+  }
+  .now-playing h2{font-size:clamp(1.55rem,6.8vw,2.25rem)}
+  .cover-button{
+    position:fixed;left:calc(50% - 126px);top:auto;bottom:4.5vh;
+    width:54px;height:54px;margin:0;z-index:2;
+    box-shadow:0 8px 24px rgba(0,0,0,.65)
+  }
+  .player-controls{left:50%;bottom:4.5vh;transform:translateX(-28%);gap:9px}
+  .place-button{left:6vw;right:6vw;bottom:4.5vh;width:auto;transform:none}
+  .visualizer-link{margin:7px auto 0}
+}
