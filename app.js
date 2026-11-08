@@ -206,3 +206,13 @@ audio.addEventListener('play',hardStopAmbient);
 $('#placeButton').addEventListener('click',hardStopAmbient,{capture:true});
 $('#introButton').addEventListener('click',hardStopAmbient,{capture:true});
 document.querySelectorAll('[data-special],[data-side]').forEach(b=>b.addEventListener('click',hardStopAmbient,{capture:true}));
+
+// El ambiente solo puede existir antes de comenzar el álbum.
+async function ensureSound(){
+ soundOn=true;$('#soundConsent').classList.add('is-hidden');$('#soundButton').textContent='♫';
+ if(!ctx){ctx=new (window.AudioContext||window.webkitAudioContext)();startRain()}
+ if(ctx.state==='suspended')await ctx.resume();
+ const ambientAllowed=!placed&&audio.paused;
+ if(rainGain){rainGain.gain.cancelScheduledValues(ctx.currentTime);rainGain.gain.setTargetAtTime(ambientAllowed?.014:0,ctx.currentTime,.12)}
+ if(ambientAllowed&&!ambientTimer)queueAmbientSnippet(1600);else if(!ambientAllowed)hardStopAmbient();
+}
