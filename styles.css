@@ -133,3 +133,21 @@
 @media(max-width:760px) and (prefers-reduced-motion:reduce){
   .room{background-image:url('assets/images/room-mobile.png')!important}
 }
+
+/* Experiencia móvil: lluvia solo en la ventana y vinilo descendente */
+@media(max-width:760px),(hover:none) and (pointer:coarse){
+  .room{background-position:center top!important;background-size:cover!important}
+  .rain{
+    inset:7.5vh 3.5vw auto auto;
+    width:34vw;height:39vh;opacity:.62;
+    background-image:repeating-linear-gradient(92deg,transparent 0 9px,rgba(190,236,248,.34) 10px,transparent 12px 23px),repeating-linear-gradient(88deg,transparent 0 17px,rgba(125,201,225,.2) 18px,transparent 20px 35px);
+    background-size:100% 210%,100% 165%;
+    animation:window-rain .95s linear infinite;
+    mask-image:linear-gradient(#000,#000);-webkit-mask-image:linear-gradient(#000,#000);
+    border-radius:2px;overflow:hidden;mix-blend-mode:screen;
+  }
+  .vinyl-stage{left:51.5%;top:59%;width:min(58vw,330px)}
+  .vinyl{transform:translateY(-115vh) rotateX(68deg) rotateZ(-18deg) scale(.58);transition:opacity .22s,transform 1.65s cubic-bezier(.18,.82,.2,1)}
+  .vinyl.is-placed{transform:translateY(0) rotateX(68deg) rotateZ(0) scale(1)}
+}
+@keyframes window-rain{from{background-position:0 -110%,0 -75%}to{background-position:-7px 115%,5px 95%}}
