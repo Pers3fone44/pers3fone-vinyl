@@ -252,3 +252,23 @@ async function ensureSound(){
  if(rainGain)rainGain.gain.setTargetAtTime(ambientAllowed?.032:0,ctx.currentTime,.12);
  if(ambientAllowed&&!ambientTimer)queueAmbientSnippet(1600);else if(!ambientAllowed)hardStopAmbient();
 }
+
+// Noche lo-fi limpia: lluvia escasa y coche lejano ocasional, sin crujido analógico.
+let distantCarTimer=null,distantCarNodes=[];
+function startRain(){
+ const seconds=8,length=ctx.sampleRate*seconds,buffer=ctx.createBuffer(1,length,ctx.sampleRate),data=buffer.getChannelData(0);let bed=0,drop=0;
+ for(let i=0;i<length;i++){bed=(bed+(Math.random()*2-1)*.005)/1.005;if(Math.random()<.00006)drop=.2+Math.random()*.18;drop*=.996;const drift=Math.sin(i/ctx.sampleRate*2*Math.PI*.15)*.008;data[i]=(bed*.2+drift+drop)*.22}
+ rainSource=ctx.createBufferSource();rainSource.buffer=buffer;rainSource.loop=true;
+ const low=ctx.createBiquadFilter();low.type='lowpass';low.frequency.value=1250;const high=ctx.createBiquadFilter();high.type='highpass';high.frequency.value=70;
+ rainGain=ctx.createGain();rainGain.gain.value=.032;rainSource.connect(low).connect(high).connect(rainGain).connect(ctx.destination);rainSource.start();
+}
+function playDistantCar(){
+ if(!ctx||placed||!audio.paused)return;const now=ctx.currentTime,duration=6.5;
+ const osc=ctx.createOscillator(),filter=ctx.createBiquadFilter(),gain=ctx.createGain(),pan=ctx.createStereoPanner();
+ osc.type='triangle';osc.frequency.setValueAtTime(72,now);osc.frequency.exponentialRampToValueAtTime(46,now+duration);filter.type='lowpass';filter.frequency.value=260;
+ gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(.022,now+1.8);gain.gain.exponentialRampToValueAtTime(.009,now+3.8);gain.gain.exponentialRampToValueAtTime(.0001,now+duration);
+ pan.pan.setValueAtTime(-.75,now);pan.pan.linearRampToValueAtTime(.7,now+duration);osc.connect(filter).connect(gain).connect(pan).connect(ctx.destination);osc.start(now);osc.stop(now+duration);distantCarNodes.push(osc);osc.onended=()=>distantCarNodes=distantCarNodes.filter(n=>n!==osc);
+}
+function scheduleDistantCar(delay=10000+Math.random()*12000){clearTimeout(distantCarTimer);distantCarTimer=setTimeout(()=>{if(!placed&&audio.paused){playDistantCar();scheduleDistantCar(22000+Math.random()*22000)}},delay)}
+function hardStopAmbient(){clearTimeout(ambientTimer);ambientTimer=null;clearTimeout(distantCarTimer);distantCarTimer=null;ambientAudio.onloadedmetadata=null;ambientAudio.pause();ambientAudio.currentTime=0;ambientAudio.volume=0;distantCarNodes.forEach(n=>{try{n.stop()}catch(e){}});distantCarNodes=[];if(rainGain&&ctx){rainGain.gain.cancelScheduledValues(ctx.currentTime);rainGain.gain.setValueAtTime(0,ctx.currentTime)}}
+async function ensureSound(){soundOn=true;$('#soundConsent').classList.add('is-hidden');$('#soundButton').textContent='♫';if(!ctx){ctx=new (window.AudioContext||window.webkitAudioContext)();startRain()}if(ctx.state==='suspended')await ctx.resume();const ambientAllowed=!placed&&audio.paused;if(rainGain)rainGain.gain.setTargetAtTime(ambientAllowed?.032:0,ctx.currentTime,.12);if(ambientAllowed){if(!ambientTimer)queueAmbientSnippet(1600);if(!distantCarTimer)scheduleDistantCar()}else hardStopAmbient()}
