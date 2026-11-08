@@ -171,6 +171,12 @@
   text-shadow:0 2px 14px #000;transition:color .25s,transform .25s;
 }
 .side-nav-item:hover,.side-nav-item:focus-visible{color:#fff;transform:translateX(-4px);outline:none}
+.side-nav-item span{display:inline-block;animation:menu-drift 5.8s ease-in-out infinite;will-change:transform,opacity;text-shadow:0 2px 14px #000,0 0 0 rgba(236,138,178,0)}
+.side-nav-item:nth-child(2) span{animation-delay:-1.35s;animation-duration:6.4s}
+.side-nav-item:nth-child(3) span{animation-delay:-2.7s;animation-duration:5.4s}
+.side-nav-item:nth-child(4) span{animation-delay:-4.05s;animation-duration:6.8s}
+.side-nav-item:hover span,.side-nav-item:focus-visible span{animation-play-state:paused;text-shadow:0 2px 14px #000,0 0 12px rgba(236,138,178,.28)}
+@keyframes menu-drift{0%,100%{transform:translate3d(0,0,0);opacity:.88}42%{transform:translate3d(-2px,-1px,0);opacity:1}68%{transform:translate3d(2px,1px,0);opacity:.93}}
 .side-nav-item.is-active{color:#f1e6e1}
 .side-nav-item.is-active::before,.side-nav-item.is-active::after{
   content:"";position:absolute;top:50%;width:12px;height:12px;border-color:#f1e6e1;opacity:.9;
